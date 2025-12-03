@@ -8,13 +8,11 @@
   --accent-2: #7c5dff;
   --border: rgba(148, 163, 184, 0.16);
   --shadow: 0 20px 36px rgba(0, 0, 0, 0.5);
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: var(--text);
   background-color: var(--bg);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
 *,
