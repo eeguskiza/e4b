@@ -85,32 +85,18 @@ const deleteContact = async (id) => {
 </script>
 
 <template>
-  <main
-    class="page"
-    itemscope
-    itemtype="https://schema.org/ContactPage"
-  >
+  <main class="page" itemscope itemtype="https://schema.org/ContactPage">
     <header class="hero" role="banner">
-      <p class="kicker">E4b · Vue + Firebase</p>
+      <p class="kicker">Tu gente, a mano</p>
       <h1 itemprop="name">Agenda de contactos</h1>
       <p class="lede">
-        SPA con Vue 3 y Vuefire: añade, lista y borra contactos en Firestore.
-        Incluye microdatos, RDFa y JSON-LD, lista para validar HTML/CSS y desplegar en Netlify.
+        Guarda nombres, correos y teléfonos en un sitio sencillo. Los datos quedan en
+        tu Firestore y puedes añadir o borrar sin recargar.
       </p>
-      <dl class="stats" aria-label="Resumen">
-        <div>
-          <dt>Total</dt>
-          <dd>{{ contactCount }}</dd>
-        </div>
-        <div>
-          <dt>Persistencia</dt>
-          <dd>Firestore</dd>
-        </div>
-        <div>
-          <dt>SPA</dt>
-          <dd>Vue 3 + Vuefire</dd>
-        </div>
-      </dl>
+      <div class="stat-card" aria-label="Contactos guardados">
+        <span>Total guardados</span>
+        <strong>{{ contactCount }}</strong>
+      </div>
     </header>
 
     <section class="layout" vocab="https://schema.org/" typeof="ContactPage">
