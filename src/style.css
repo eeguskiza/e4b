@@ -139,6 +139,20 @@ h1 {
   gap: 12px;
 }
 
+.filter-bar {
+  margin-bottom: 12px;
+}
+
+.filter-bar input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
 label {
   display: flex;
   flex-direction: column;
@@ -236,6 +250,45 @@ button:disabled {
   border: 1px dashed var(--border);
   color: var(--muted);
   margin: 12px 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.actions .ghost {
+  font-size: 13px;
+  padding: 8px 10px;
+}
+
+.actions .danger {
+  border-color: rgba(248, 113, 113, 0.4);
+  color: #fca5a5;
+}
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-card {
+  height: 64px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.05));
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .alert {

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useCollection, useFirestore } from 'vuefire'
 import {
   addDoc,
@@ -24,8 +24,30 @@ const form = reactive({
 
 const status = ref({ type: '', message: '' })
 const loading = ref(false)
+const firstLoad = ref(true)
+const filter = ref('')
 
 const contactCount = computed(() => contacts.value?.length || 0)
+const filteredContacts = computed(() => {
+  const list = contacts.value || []
+  const term = filter.value.trim().toLowerCase()
+  if (!term) return list
+  return list.filter((c) =>
+    [c.name, c.email, c.phone].some((field) =>
+      String(field || '').toLowerCase().includes(term)
+    )
+  )
+})
+
+watch(
+  contacts,
+  (val) => {
+    if (val) {
+      firstLoad.value = false
+    }
+  },
+  { immediate: true }
+)
 
 const resetForm = () => {
   form.name = ''
@@ -72,14 +94,26 @@ const addContact = async () => {
   }
 }
 
-const deleteContact = async (id) => {
+const deleteContact = async (id, name) => {
   if (!id) return
+  const ok = window.confirm(`¿Borrar el contacto "${name}"?`)
+  if (!ok) return
   status.value = { type: '', message: '' }
   try {
     await deleteDoc(doc(contactsRef, id))
     status.value = { type: 'success', message: 'Contacto eliminado.' }
   } catch (err) {
     status.value = { type: 'error', message: 'No se pudo borrar. Intenta de nuevo.' }
+  }
+}
+
+const copyToClipboard = async (value, label) => {
+  if (!value) return
+  try {
+    await navigator.clipboard.writeText(value)
+    status.value = { type: 'success', message: `${label} copiado al portapapeles.` }
+  } catch (err) {
+    status.value = { type: 'error', message: 'No se pudo copiar. Intenta de nuevo.' }
   }
 }
 </script>
@@ -155,8 +189,26 @@ const deleteContact = async (id) => {
           <span class="pill">{{ contactCount }}</span>
         </div>
 
+        <div class="filter-bar">
+          <input
+            v-model="filter"
+            type="search"
+            placeholder="Buscar por nombre, email o teléfono..."
+            aria-label="Filtrar contactos"
+          />
+        </div>
+
         <div
-          v-if="!contacts || contacts.length === 0"
+          v-if="firstLoad"
+          class="skeleton-list"
+          role="status"
+          aria-label="Cargando contactos"
+        >
+          <div class="skeleton-card" v-for="n in 3" :key="n"></div>
+        </div>
+
+        <div
+          v-else-if="!filteredContacts || filteredContacts.length === 0"
           class="empty"
           role="status"
         >
@@ -165,7 +217,7 @@ const deleteContact = async (id) => {
 
         <ul class="contact-list">
           <li
-            v-for="contact in contacts"
+            v-for="contact in filteredContacts"
             :key="contact.id"
             itemscope
             itemprop="contactPoint"
@@ -184,14 +236,32 @@ const deleteContact = async (id) => {
                 </a>
               </p>
             </div>
-            <button
-              type="button"
-              class="ghost"
-              @click="deleteContact(contact.id)"
-              :aria-label="`Borrar contacto ${contact.name}`"
-            >
-              Borrar
-            </button>
+            <div class="actions">
+              <button
+                type="button"
+                class="ghost"
+                @click="copyToClipboard(contact.email, 'Email')"
+                aria-label="Copiar email"
+              >
+                Copiar email
+              </button>
+              <button
+                type="button"
+                class="ghost"
+                @click="copyToClipboard(contact.phone, 'Teléfono')"
+                aria-label="Copiar teléfono"
+              >
+                Copiar teléfono
+              </button>
+              <button
+                type="button"
+                class="ghost danger"
+                @click="deleteContact(contact.id, contact.name)"
+                :aria-label="`Borrar contacto ${contact.name}`"
+              >
+                Borrar
+              </button>
+            </div>
           </li>
         </ul>
       </article>

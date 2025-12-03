@@ -1,6 +1,6 @@
 ## Agenda de contactos (Vue 3 + Firestore)
 
-SPA para guardar nombres, correos y teléfonos. Persiste en Cloud Firestore vía Vuefire, incluye datos estructurados (Microdata, RDFa, JSON-LD) y metadatos sociales (OG/Twitter). Desplegada en Netlify.
+SPA para gestionar contactos (nombre, email, teléfono) en tiempo real. Usa Vue 3 + Vite con Vuefire para persistir en Cloud Firestore. Incluye datos estructurados (Microdata, RDFa, JSON-LD) y metadatos sociales (OG/Twitter) listos para compartir. CSS propio sin frameworks.
 
 ### Estructura
 - `src/`: App Vue (`App.vue`, estilos en `style.css`, bootstrap Firebase en `firebase.js`).
@@ -34,9 +34,7 @@ npm run build
 Genera `dist/`.
 
 ### Despliegue Netlify
-- Build: `npm run build`
-- Publish dir: `dist`
-- Variables: `VITE_FIREBASE_*` (mismas que `.env.local`).
+- Sitio funcional en: https://e4b-agendavue.netlify.app
 - Metadatos sociales apuntan a `https://e4b-agendavue.netlify.app/social-card.png`.
 
 ### Validaciones W3C (logs)
@@ -45,8 +43,9 @@ Tras `npm run build`:
 npx html-validator --file dist/index.html --format text > html-validation.log
 npx css-validator --profile css3 --warning 0 dist/assets/*.css > css-validation.log
 ```
-- HTML: Page is valid.
-- CSS: solo avisos de que las CSS variables no se pueden comprobar estáticamente (sin errores bloqueantes).
+- HTML: Page is valid (ver `html-validation.log`).
+- CSS: avisos solo por variables dinámicas, sin errores bloqueantes (ver `css-validation.log`).
+- Logs generados en el repo tras la última build: `html-validation.log`, `css-validation.log`.
 
 ### Reglas Firestore
 Durante desarrollo puedes abrirlas, pero antes de producción restringe lectura/escritura según tu política (auth o validación de campos).
