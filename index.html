@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda Vue · E4b</title>
+    <meta
+      name="description"
+      content="SPA de agenda de contactos con Vue 3, Vuefire y Firestore. Incluye microdatos, RDFa, JSON-LD y metadatos sociales."
+    />
+    <meta property="og:title" content="Agenda Vue · E4b" />
+    <meta
+      property="og:description"
+      content="SPA Vue 3 con contactos guardados en Firestore y marcado semántico listo para validadores."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://example.com/e4b-agenda" />
+    <meta property="og:image" content="https://example.com/social-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Agenda Vue · E4b" />
+    <meta
+      name="twitter:description"
+      content="SPA Vue 3 + Firestore con microdatos, RDFa y JSON-LD."
+    />
+    <meta name="twitter:image" content="https://example.com/social-card.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Agenda Vue E4b",
+        "description": "SPA de contactos en Vue con persistencia en Firestore y datos estructurados.",
+        "url": "https://example.com/e4b-agenda",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Proyecto IW",
+          "url": "https://example.com"
+        }
+      }
+    </script>
+  </head>
+  <body vocab="https://schema.org/" typeof="WebPage">
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
